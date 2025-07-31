@@ -1,6 +1,7 @@
+/* jshint esversion: 11 */
+/* global html2canvas:true */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Инициализация полос прогресса для языков
     document.querySelectorAll('.language__bar').forEach(bar => {
         const level = bar.dataset.level;
         const fill = document.createElement('div');
@@ -12,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         bar.appendChild(fill);
     });
 
-    // Определяем начальные данные из HTML
     const initialData = {
         profileIntro: document.querySelector('.profile__intro')?.textContent || '',
         profileName: document.querySelector('.profile__name')?.textContent || '',
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         contactEmail: document.querySelector('.contact__email')?.textContent || ''
     };
 
-    // Определение всех редактируемых полей для универсальной обработки
     const editableFields = [
         { selector: '.profile__intro', prop: 'profileIntro', type: 'text' },
         { selector: '.profile__name', prop: 'profileName', type: 'text' },
@@ -51,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { selector: '.experience__date', prop: 'experienceDates', type: 'arrayText' },
         { selector: '.experience__job', prop: 'experienceJobs', type: 'arrayText' },
         { selector: '.experience__details', prop: 'experienceDetails', type: 'arrayText' },
-        // *** РАСКОММЕНТИРУЙТЕ И ДОБАВЬТЕ ЕСЛИ ВЫШЕ ВЫ ДОБАВИЛИ experienceDescriptionLis В initialData ***
-        // { selector: '.experience__description ul li', prop: 'experienceDescriptionLis', type: 'arrayText' },
         { selector: '.tools__title', prop: 'toolsTitle', type: 'text' },
         { selector: '.tools__section-title', prop: 'toolsSectionTitles', type: 'arrayText' },
         { selector: '.education__title', prop: 'educationTitle', type: 'text' },
@@ -66,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { selector: '.contact__email', prop: 'contactEmail', type: 'text' }
     ];
 
-    // Функция для загрузки сохраненных данных из localStorage
     function loadSavedData() {
         const savedData = JSON.parse(localStorage.getItem('resumeData')) || {};
 
@@ -94,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Вкл/выкл режим редактирования
     function toggleEditMode(isEditing) {
         const editableElements = [
             document.querySelector('.profile__intro'),
@@ -106,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ...document.querySelectorAll('.experience__job'),
             ...document.querySelectorAll('.experience__details'),
             // Если li должны быть редактируемыми:
-            ...document.querySelectorAll('.experience__description ul li'), // *** Убедитесь, что это действительно нужно
+            ...document.querySelectorAll('.experience__description ul li'),
             document.querySelector('.tools__title'),
             ...document.querySelectorAll('.tools__section-title'),
             document.querySelector('.education__title'),
@@ -118,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ...document.querySelectorAll('.interests__item'),
             document.querySelector('.contact__title'),
             document.querySelector('.contact__email')
-        ].filter(Boolean); // .filter(Boolean) удаляет null элементы, если querySelector ничего не нашел
+        ].filter(Boolean);
 
         editableElements.forEach(element => {
             element.setAttribute('contenteditable', isEditing);
@@ -126,11 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.querySelectorAll('.language__bar').forEach(bar => {
-            bar.setAttribute('contenteditable', 'false'); // Запрещаем ввод текста
+            bar.setAttribute('contenteditable', 'false');
             if (isEditing) {
-                bar.classList.add('editable'); // Добавляем класс для визуального стиля
+                bar.classList.add('editable');
                 const fill = bar.querySelector('div');
-                if (fill) fill.style.width = bar.getAttribute('data-level'); // Устанавливаем текущую ширину
+                if (fill) fill.style.width = bar.getAttribute('data-level');
             } else {
                 bar.classList.remove('editable');
             }
@@ -146,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Функция для сохранения текущих данных в localStorage
     function saveData() {
         const data = {};
         editableFields.forEach(field => {
@@ -162,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('resumeData', JSON.stringify(data));
     }
 
-    // Функция для сброса данных к начальному состоянию и удаления из localStorage
     function resetData() {
         editableFields.forEach(field => {
             if (field.type === 'text') {
@@ -186,16 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // *** ГЛАВНОЕ ИСПРАВЛЕНИЕ: Удаляем данные из localStorage ***
         localStorage.removeItem('resumeData');
 
-        toggleEditMode(false); // Выключаем режим редактирования после сброса
+        toggleEditMode(false);
     }
 
-    // Инициализация: Загружаем сохраненные данные при старте
     loadSavedData();
 
-    // Обработчики событий для кнопок
     const editBtn = document.querySelector('.resume__edit-btn');
     const resetBtn = document.querySelector('.resume__reset-btn');
 
@@ -203,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         editBtn.addEventListener('click', () => {
             const isEditing = editBtn.textContent === 'Edit';
             toggleEditMode(isEditing);
-            if (!isEditing) saveData(); // Сохраняем при выходе из режима редактирования (т.е. при нажатии Save)
+            if (!isEditing) saveData();
         });
     }
 
@@ -211,25 +201,22 @@ document.addEventListener('DOMContentLoaded', () => {
         resetBtn.addEventListener('click', resetData);
     }
 
-    // Сохранение данных при потере фокуса с редактируемого элемента
     document.addEventListener('blur', (event) => {
         if (event.target.closest('.editable') && event.target.getAttribute('contenteditable') === 'true') {
             saveData();
         }
-    }, true); // `true` для capture phase, чтобы ловить blur на дочерних элементах
+    }, true);
 
-    // Предотвращение новой строки при нажатии Enter в редактируемых элементах
     document.addEventListener('keypress', (event) => {
         if (event.key === 'Enter' && event.target.closest('.editable') && event.target.getAttribute('contenteditable') === 'true') {
             event.preventDefault();
-            event.target.blur(); // Снимаем фокус, чтобы вызвать blur и сохранить данные
+            event.target.blur();
         }
     });
 
-    // Обработчик для изменения уровня языка кликом по полосе
     document.addEventListener('click', (event) => {
         const bar = event.target.closest('.language__bar');
-        if (bar && bar.classList.contains('editable')) { // Проверяем, что bar в режиме редактирования
+        if (bar && bar.classList.contains('editable')) {
             const rect = bar.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
             const widthPercent = Math.min(100, Math.max(0, (clickX / rect.width) * 100));
@@ -237,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fill = bar.querySelector('div');
             if (fill) fill.style.width = newLevel;
             bar.setAttribute('data-level', newLevel);
-            saveData(); // Сохраняем изменение уровня языка
+            saveData();
         }
     });
 });
