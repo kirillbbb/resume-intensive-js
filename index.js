@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         experienceDates: Array.from(document.querySelectorAll('.experience__date')).map(date => date.textContent),
         experienceJobs: Array.from(document.querySelectorAll('.experience__job')).map(job => job.textContent),
         experienceDetails: Array.from(document.querySelectorAll('.experience__details')).map(detail => detail.textContent),
-        // *** ДОБАВИТЬ ЭТО, ЕСЛИ ВЫ ХОТИТЕ, ЧТОБЫ LI ИЗ ОПЫТА СБРАСЫВАЛИСЬ ***
-        // experienceDescriptionLis: Array.from(document.querySelectorAll('.experience__description ul li')).map(li => li.textContent),
         toolsTitle: document.querySelector('.tools__title')?.textContent || '',
         toolsSectionTitles: Array.from(document.querySelectorAll('.tools__section-title')).map(title => title.textContent),
         educationTitle: document.querySelector('.education__title')?.textContent || '',
@@ -227,4 +225,29 @@ document.addEventListener('DOMContentLoaded', () => {
             saveData();
         }
     });
+
+    const buttons = document.querySelectorAll('.resume__edit-btn, .resume__reset-btn, .resume__pdf-btn');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const wave = document.createElement('span');
+            wave.classList.add('wave');
+            this.appendChild(wave);
+
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+
+            const x = (rect.width / 2) - (size / 2);
+            const y = (rect.height / 2) - (size / 2);
+
+            wave.style.width = wave.style.height = `${size}px`;
+            wave.style.left = `${x}px`;
+            wave.style.top = `${y}px`;
+
+            wave.addEventListener('animationend', () => {
+                wave.remove();
+            });
+        });
+    });
+
 });
