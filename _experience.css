@@ -1,0 +1,131 @@
+.experience {
+    width: 411px;
+    height: 359px;
+    flex: 0 0 auto;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.experience__title {
+    margin: 0 0 4px 0;
+}
+
+.experience__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-radius: var(--block-border-radius);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.experience__item.current {
+    background-color: #28D979;
+    color: #EBF9F2;
+}
+
+.experience__item.current .experience__date,
+.experience__item.current .experience__job,
+.experience__item.current .experience__details,
+.experience__item.current .experience__description ul li {
+    color: inherit;
+}
+
+.experience__description{
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-poppins-regular);
+    line-height: 150%;
+    flex-basis: 65%;
+    padding-left: 10px;
+    box-sizing: border-box;
+    position: relative;
+    padding-top: 15px;
+}
+
+
+.experience__description ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+    margin-top: 5px;
+    font-family: var(--font-family-poppins);
+    font-size: 8px;
+    font-weight: var(--font-poppins-regular);
+    line-height: 150%;
+    color: inherit;
+}
+.experience__description ul li {
+    margin-bottom: 2px;
+}
+
+.experience__main-info {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 35%;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.experience__top-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.experience__bottom-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.experience__date {
+    font-family: var(--font-family-poppins);
+    font-size: 8px;
+    padding-top: 2px;
+    font-weight: var(--font-poppins-medium);
+    line-height: 150%;
+    margin: 0;
+    color: inherit;
+}
+
+.experience__job {
+    font-family: var(--font-family-poppins);
+    font-size: 10px;
+    font-weight: var(--font-poppins-medium);
+    line-height: 150%;
+    margin: 0;
+    color: inherit;
+}
+
+.experience__details {
+    font-family: var(--font-family-poppins);
+    font-size: 8px;
+    font-weight: var(--font-poppins-regular);
+    line-height: 150%;
+    color: #3F3D3D;
+    margin: 0;
+}
+
+.experience__tag {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: rgba(126, 115, 18,0.4);
+    color: #DDF163;
+    padding: 2px 8px;
+    border-radius: 59px;
+    font-family: var(--font-family-poppins);
+    font-size: 8px;
+    font-weight: var(--font-poppins-medium);
+    line-height: 155%;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 1;
+}

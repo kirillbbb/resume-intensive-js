@@ -1,0 +1,126 @@
+
+.education {
+    /* Ширина и высота самого контейнера .education (заголовок + блоки) */
+    width: 268px; /* ФИКСИРОВАНО */
+    height: 286px; /* ФИКСИРОВАНО */
+    flex: 0 0 auto;
+    overflow-y: auto; /* Добавляем прокрутку, если контента много */
+    overflow-x: hidden; /* Скрываем горизонтальную прокрутку */
+
+    display: flex; /* Используем Flex для вертикального стека строк */
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--padding);
+    background-color: var(--block-background-color);
+    border-radius: var(--block-border-radius);
+}
+
+.education__title {
+    width: 100%;
+    margin: 0 0 6px 0;
+    font-family: var(--font-family-poppins);
+    font-size: 14px;
+    font-weight: var(--font-poppins-medium);
+    line-height: 150%;
+}
+
+.education__row {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.education__item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-radius: var(--block-border-radius);
+    box-sizing: border-box;
+    width: 116px;
+    min-height: 100px;
+    flex-shrink: 0;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.education__item--current {
+    background-color: #28D979;
+    color: #EBF9F2;
+}
+
+.education__item--current .education__year,
+.education__item--current .education__course,
+.education__item--current .education__institution,
+.education__item--current .education__hashtag {
+    color: inherit;
+}
+
+
+.education__top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.education__year {
+    font-family: var(--font-family-poppins);
+    font-size: 10px;
+    font-weight: var(--font-poppins-medium);
+    line-height: 150%;
+    margin: 0;
+    color: inherit;
+}
+
+.education__heart-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.education__course {
+    font-family: var(--font-family-poppins);
+    font-size: 10px;
+    font-weight: var(--font-poppins-medium);
+    line-height: 150%;
+    margin: 0;
+}
+.education__hashtag.current{
+    color: #EBF9F2 !important;
+}
+.education__hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+    max-height: 50px;
+    overflow: hidden;
+
+}
+
+.education__hashtag {
+    font-family: var(--font-family-poppins);
+    font-size: 8px;
+    font-weight: var(--font-poppins-regular);
+    line-height: 150%;
+    color:#149063
+}
+
+.education__item--current .education__hashtag {
+    color: #ffffff;
+}
+
+.education__institution {
+    font-family: var(--font-family-poppins);
+    font-size: 8px;
+    font-weight: var(--font-poppins-regular);
+    line-height: 150%;
+    color: black;
+    margin: 0;
+    margin-top: auto;
+}
+.education__institution.current{
+    color: white;
+}
