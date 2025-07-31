@@ -132,6 +132,7 @@
     font-family: var(--font-family-poppins);
     font-size: 8px;
     font-weight: var(--font-poppins-medium);
+    line-height: 155%;
     border: none;
     cursor: pointer;
     white-space: nowrap;
