@@ -1,0 +1,78 @@
+@import 'css/fonts.css';
+@import "css/_profile.css";
+@import "css/_languages.css";
+@import "css/_experience.css";
+@import "css/_tools.css";
+@import "css/_education.css";
+@import "css/_interests.css";
+@import "css/_contact.css";
+:root {
+    /* Общие стили */
+    --block-background-color: #f0f0f0;
+    --block-border-radius: 12px;
+    --padding: 12px;
+    --gap: 20px;
+
+    --first-line-elem-height: 124px;
+    --first-line-profile-width: 124px;
+
+    --font-family-poppins: "Poppins", sans-serif;
+    --font-poppins-regular: 400;
+    --font-poppins-medium: 500;
+    --font-poppins-semibold: 600;
+    --font-poppins-bold: 700;
+}
+h2{
+    font-family: var(--font-family-poppins);
+    font-size: 14px;
+    font-weight: var(--font-poppins-medium);
+    line-height: 150%;
+}
+.resume {
+    margin: 0;
+    padding: 0;
+}
+
+.resume__container {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: var(--gap);
+    margin: 0 auto;
+    max-width: 555px;
+}
+
+.resume__row:first-child {
+    display: flex;
+    gap: var(--gap);
+    align-items: flex-start;
+    height: var(--first-line-elem-height);
+    max-height: var(--first-line-elem-height);
+    overflow: hidden;
+}
+
+.resume__row:nth-child(2) {
+    display: flex;
+    gap: var(--gap);
+    align-items: stretch;
+}
+
+.resume__row:last-child {
+    display: flex;
+    gap: var(--gap);
+    align-items: flex-start;
+}
+.resume__block {
+    background-color: var(--block-background-color);
+    border-radius: var(--block-border-radius);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    box-sizing: border-box;
+    padding: var(--padding);
+}
+.interests-contact-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
