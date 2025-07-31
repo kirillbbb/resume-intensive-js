@@ -9,14 +9,14 @@
 
     display: flex; /* Используем Flex для вертикального стека строк */
     flex-direction: column;
-    gap: 10px; /* Отступ между строками */
-    padding: var(--padding); /* Паддинг 12px с каждой стороны */
+    gap: 10px;
+    padding: var(--padding);
     background-color: var(--block-background-color);
     border-radius: var(--block-border-radius);
 }
 
 .education__title {
-    width: 100%; /* Заголовок занимает всю ширину */
+    width: 100%;
     margin: 0 0 6px 0;
     font-family: var(--font-family-poppins);
     font-size: 14px;
@@ -26,43 +26,43 @@
 
 .education__row {
     display: flex;
-    gap: 10px; /* Отступ между блоками в строке */
-    flex: 1; /* Равномерное распределение пространства между строками */
+    gap: 10px;
+    flex: 1;
 }
 
 .education__item {
     display: flex;
-    flex-direction: column; /* Элементы внутри item располагаются в столбец */
-    padding: 8px; /* Похоже на 8px padding на макете */
-    background-color: #FFFFFF; /* Серый фон по умолчанию */
+    flex-direction: column;
+    padding: 8px;
+    background-color: #FFFFFF;
     color: #000000;
     border-radius: var(--block-border-radius);
     box-sizing: border-box;
-    width: 116px; /* Корректируем ширину до 116px для точного соответствия колонке */
-    min-height: 100px; /* Минимальная высота для квадратного вида */
-    flex-shrink: 0; /* Не позволяет блокам сжиматься */
-    justify-content: space-between; /* Распределяет содержимое равномерно */
-    overflow: hidden; /* Скрываем переполнение */
+    width: 116px;
+    min-height: 100px;
+    flex-shrink: 0;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
 .education__item--current {
-    background-color: #28D979; /* Зеленый фон */
-    color: #EBF9F2; /* Светлый текст */
+    background-color: #28D979;
+    color: #EBF9F2;
 }
 
 .education__item--current .education__year,
 .education__item--current .education__course,
 .education__item--current .education__institution,
 .education__item--current .education__hashtag {
-    color: inherit; /* Наследует светлый цвет от родительского .education__item--current */
+    color: inherit;
 }
 
 
 .education__top-row {
     display: flex;
-    justify-content: space-between; /* Распределяет год и иконку по краям */
-    align-items: center; /* Выравнивает по центру по вертикали */
-    margin-bottom: 4px; /* Отступ между годом/иконкой и курсом */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
 }
 
 .education__year {
@@ -71,13 +71,13 @@
     font-weight: var(--font-poppins-medium);
     line-height: 150%;
     margin: 0;
-    color: inherit; /* Наследует цвет */
+    color: inherit;
 }
 
 .education__heart-icon {
-    width: 16px; /* Размер иконки сердца */
-    height: 16px; /* Размер иконки сердца */
-    object-fit: contain; /* Чтобы иконка не искажалась */
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
 }
 
 .education__course {
@@ -92,24 +92,24 @@
 }
 .education__hashtags {
     display: flex;
-    flex-wrap: wrap; /* Разрешаем хэштегам переходить на новую строку */
-    gap: 4px; /* Отступ между хэштегами */
-    margin-bottom: 8px; /* Отступ хэштегов от названия учреждения */
-    max-height: 50px; /* Ограничиваем высоту для хэштегов */
-    overflow: hidden; /* Скрываем переполнение */
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+    max-height: 50px;
+    overflow: hidden;
 
 }
 
 .education__hashtag {
     font-family: var(--font-family-poppins);
-    font-size: 8px; /* Размер шрифта для хэштегов */
+    font-size: 8px;
     font-weight: var(--font-poppins-regular);
     line-height: 150%;
     color:#149063
 }
 
 .education__item--current .education__hashtag {
-    color: #ffffff; /* Белый цвет текста для хэштегов в зеленом блоке */
+    color: #ffffff;
 }
 
 .education__institution {
@@ -119,7 +119,7 @@
     line-height: 150%;
     color: black;
     margin: 0;
-    margin-top: auto; /* Прижимает учреждение к низу блока */
+    margin-top: auto;
 }
 .education__institution.current{
     color: white;

@@ -39,10 +39,29 @@
 
 .experience__description{
     font-family: var(--font-family-poppins);
+    font-weight: var(--font-poppins-regular);
+    line-height: 150%;
+    flex-basis: 65%;
+    padding-left: 10px;
+    box-sizing: border-box;
+    position: relative;
+    padding-top: 15px;
+}
+
+
+.experience__description ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+    margin-top: 5px;
+    font-family: var(--font-family-poppins);
     font-size: 8px;
     font-weight: var(--font-poppins-regular);
     line-height: 150%;
-
+    color: inherit;
+}
+.experience__description ul li {
+    margin-bottom: 2px;
 }
 
 .experience__main-info {
@@ -91,34 +110,6 @@
     line-height: 150%;
     color: #3F3D3D;
     margin: 0;
-}
-
-.experience__description {
-    flex-basis: 65%;
-    padding-left: 10px;
-    box-sizing: border-box;
-    position: relative;
-    /* Уменьшаем этот padding-top, чтобы текст поднялся выше.
-       Попробуйте значения 18px, 15px, 12px и т.д. */
-    padding-top: 15px; /* Было 20px, пробуем 15px. Это сдвинет весь контент выше. */
-}
-
-.experience__description ul {
-    list-style-type: disc;
-    padding-left: 20px;
-    margin: 0;
-    margin-top: 5px; /* Оставляем, как было, или тоже можем уменьшить, если 15px недостаточно */
-    font-family: var(--font-family-poppins);
-    font-size: 8px;
-    font-weight: var(--font-poppins-regular);
-    line-height: 150%;
-    color: inherit;
-}
-
-.experience__description ul li {
-    /* Если хотите уменьшить вертикальный отступ между самими пунктами списка,
-       можете уменьшить margin-bottom: */
-    /* margin-bottom: 2px; */ /* Добавьте, если хотите сделать текст плотнее */
 }
 
 .experience__tag {

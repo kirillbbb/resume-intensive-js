@@ -51,12 +51,9 @@
     top: 0px;
     transform: translateY(-50%);
 
-
-
     border-radius: 59px;
     margin-bottom: 12px;
 }
-
 .tools__grid {
     display: grid;
     grid-template-columns: repeat(2, 20px);
