@@ -4,8 +4,8 @@
 @import "_experience.css";
 @import "_tools.css";
 @import "_education.css";
-@import "_interests.css";
-@import "_contact.css";
+@import "interests.css";
+@import "contact.css";
 @import "_media-adaptive.css";
 
 :root {
