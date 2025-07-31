@@ -122,7 +122,9 @@
         padding: var(--padding) !important;
         gap: var(--padding) !important;
     }
-
+    .tools__title {
+        margin: 0 0 14px 0px !important;
+    }
     .tools__section {
         background-color: white !important;
         border-radius: 6px !important;

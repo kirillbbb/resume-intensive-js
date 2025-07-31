@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Инициализация полос прогресса для языков
     document.querySelectorAll('.language__bar').forEach(bar => {
         const level = bar.dataset.level;
         const fill = document.createElement('div');
@@ -10,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bar.appendChild(fill);
     });
 
+    // Определяем начальные данные из HTML
     const initialData = {
         profileIntro: document.querySelector('.profile__intro')?.textContent || '',
         profileName: document.querySelector('.profile__name')?.textContent || '',
@@ -21,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         experienceDates: Array.from(document.querySelectorAll('.experience__date')).map(date => date.textContent),
         experienceJobs: Array.from(document.querySelectorAll('.experience__job')).map(job => job.textContent),
         experienceDetails: Array.from(document.querySelectorAll('.experience__details')).map(detail => detail.textContent),
+        // *** ДОБАВИТЬ ЭТО, ЕСЛИ ВЫ ХОТИТЕ, ЧТОБЫ LI ИЗ ОПЫТА СБРАСЫВАЛИСЬ ***
+        // experienceDescriptionLis: Array.from(document.querySelectorAll('.experience__description ul li')).map(li => li.textContent),
         toolsTitle: document.querySelector('.tools__title')?.textContent || '',
         toolsSectionTitles: Array.from(document.querySelectorAll('.tools__section-title')).map(title => title.textContent),
         educationTitle: document.querySelector('.education__title')?.textContent || '',
@@ -34,76 +39,59 @@ document.addEventListener('DOMContentLoaded', () => {
         contactEmail: document.querySelector('.contact__email')?.textContent || ''
     };
 
+    // Определение всех редактируемых полей для универсальной обработки
+    const editableFields = [
+        { selector: '.profile__intro', prop: 'profileIntro', type: 'text' },
+        { selector: '.profile__name', prop: 'profileName', type: 'text' },
+        { selector: '.profile__title', prop: 'profileTitle', type: 'text' },
+        { selector: '.languages__title', prop: 'languagesTitle', type: 'text' },
+        { selector: '.language__label', prop: 'languageLabels', type: 'arrayText' },
+        { selector: '.language__bar', prop: 'languageLevels', type: 'arrayAttr', attr: 'data-level' },
+        { selector: '.experience__title', prop: 'experienceTitle', type: 'text' },
+        { selector: '.experience__date', prop: 'experienceDates', type: 'arrayText' },
+        { selector: '.experience__job', prop: 'experienceJobs', type: 'arrayText' },
+        { selector: '.experience__details', prop: 'experienceDetails', type: 'arrayText' },
+        // *** РАСКОММЕНТИРУЙТЕ И ДОБАВЬТЕ ЕСЛИ ВЫШЕ ВЫ ДОБАВИЛИ experienceDescriptionLis В initialData ***
+        // { selector: '.experience__description ul li', prop: 'experienceDescriptionLis', type: 'arrayText' },
+        { selector: '.tools__title', prop: 'toolsTitle', type: 'text' },
+        { selector: '.tools__section-title', prop: 'toolsSectionTitles', type: 'arrayText' },
+        { selector: '.education__title', prop: 'educationTitle', type: 'text' },
+        { selector: '.education__year', prop: 'educationYears', type: 'arrayText' },
+        { selector: '.education__course', prop: 'educationCourses', type: 'arrayText' },
+        { selector: '.education__hashtag', prop: 'educationHashtags', type: 'arrayText' },
+        { selector: '.education__institution', prop: 'educationInstitutions', type: 'arrayText' },
+        { selector: '.interests__title', prop: 'interestsTitle', type: 'text' },
+        { selector: '.interests__item', prop: 'interestsItems', type: 'arrayText' },
+        { selector: '.contact__title', prop: 'contactTitle', type: 'text' },
+        { selector: '.contact__email', prop: 'contactEmail', type: 'text' }
+    ];
+
+    // Функция для загрузки сохраненных данных из localStorage
     function loadSavedData() {
         const savedData = JSON.parse(localStorage.getItem('resumeData')) || {};
-        if (savedData.profileIntro !== undefined) document.querySelector('.profile__intro').textContent = savedData.profileIntro;
-        if (savedData.profileName !== undefined) document.querySelector('.profile__name').textContent = savedData.profileName;
-        if (savedData.profileTitle !== undefined) document.querySelector('.profile__title').textContent = savedData.profileTitle;
-        if (savedData.languagesTitle !== undefined) document.querySelector('.languages__title').textContent = savedData.languagesTitle;
-        if (savedData.languageLabels) {
-            document.querySelectorAll('.language__label').forEach((label, index) => {
-                label.textContent = savedData.languageLabels[index] !== undefined ? savedData.languageLabels[index] : initialData.languageLabels[index];
-            });
-        }
-        if (savedData.languageLevels) {
-            document.querySelectorAll('.language__bar').forEach((bar, index) => {
-                const newLevel = savedData.languageLevels[index] !== undefined ? savedData.languageLevels[index] : initialData.languageLevels[index];
-                bar.setAttribute('data-level', newLevel);
-                const fill = bar.querySelector('div');
-                if (fill) fill.style.width = newLevel;
-            });
-        }
-        if (savedData.experienceTitle !== undefined) document.querySelector('.experience__title').textContent = savedData.experienceTitle;
-        if (savedData.experienceDates) {
-            document.querySelectorAll('.experience__date').forEach((date, index) => {
-                date.textContent = savedData.experienceDates[index] !== undefined ? savedData.experienceDates[index] : initialData.experienceDates[index];
-            });
-        }
-        if (savedData.experienceJobs) {
-            document.querySelectorAll('.experience__job').forEach((job, index) => {
-                job.textContent = savedData.experienceJobs[index] !== undefined ? savedData.experienceJobs[index] : initialData.experienceJobs[index];
-            });
-        }
-        if (savedData.experienceDetails) {
-            document.querySelectorAll('.experience__details').forEach((detail, index) => {
-                detail.textContent = savedData.experienceDetails[index] !== undefined ? savedData.experienceDetails[index] : initialData.experienceDetails[index];
-            });
-        }
-        if (savedData.toolsTitle !== undefined) document.querySelector('.tools__title').textContent = savedData.toolsTitle;
-        if (savedData.toolsSectionTitles) {
-            document.querySelectorAll('.tools__section-title').forEach((title, index) => {
-                title.textContent = savedData.toolsSectionTitles[index] !== undefined ? savedData.toolsSectionTitles[index] : initialData.toolsSectionTitles[index];
-            });
-        }
-        if (savedData.educationTitle !== undefined) document.querySelector('.education__title').textContent = savedData.educationTitle;
-        if (savedData.educationYears) {
-            document.querySelectorAll('.education__year').forEach((year, index) => {
-                year.textContent = savedData.educationYears[index] !== undefined ? savedData.educationYears[index] : initialData.educationYears[index];
-            });
-        }
-        if (savedData.educationCourses) {
-            document.querySelectorAll('.education__course').forEach((course, index) => {
-                course.textContent = savedData.educationCourses[index] !== undefined ? savedData.educationCourses[index] : initialData.educationCourses[index];
-            });
-        }
-        if (savedData.educationHashtags) {
-            document.querySelectorAll('.education__hashtag').forEach((hashtag, index) => {
-                hashtag.textContent = savedData.educationHashtags[index] !== undefined ? savedData.educationHashtags[index] : initialData.educationHashtags[index];
-            });
-        }
-        if (savedData.educationInstitutions) {
-            document.querySelectorAll('.education__institution').forEach((inst, index) => {
-                inst.textContent = savedData.educationInstitutions[index] !== undefined ? savedData.educationInstitutions[index] : initialData.educationInstitutions[index];
-            });
-        }
-        if (savedData.interestsTitle !== undefined) document.querySelector('.interests__title').textContent = savedData.interestsTitle;
-        if (savedData.interestsItems) {
-            document.querySelectorAll('.interests__item').forEach((item, index) => {
-                item.textContent = savedData.interestsItems[index] !== undefined ? savedData.interestsItems[index] : initialData.interestsItems[index];
-            });
-        }
-        if (savedData.contactTitle !== undefined) document.querySelector('.contact__title').textContent = savedData.contactTitle;
-        if (savedData.contactEmail !== undefined) document.querySelector('.contact__email').textContent = savedData.contactEmail;
+
+        editableFields.forEach(field => {
+            if (field.type === 'text') {
+                const element = document.querySelector(field.selector);
+                if (element) {
+                    element.textContent = savedData[field.prop] !== undefined ? savedData[field.prop] : initialData[field.prop];
+                }
+            } else if (field.type === 'arrayText') {
+                document.querySelectorAll(field.selector).forEach((el, index) => {
+                    el.textContent = savedData[field.prop]?.[index] !== undefined ? savedData[field.prop][index] : initialData[field.prop][index];
+                });
+            } else if (field.type === 'arrayAttr') {
+                document.querySelectorAll(field.selector).forEach((el, index) => {
+                    const newValue = savedData[field.prop]?.[index] !== undefined ? savedData[field.prop][index] : initialData[field.prop][index];
+                    el.setAttribute(field.attr, newValue);
+                    // Обновляем ширину заливки для language bars
+                    if (field.selector === '.language__bar') {
+                        const fill = el.querySelector('div');
+                        if (fill) fill.style.width = newValue;
+                    }
+                });
+            }
+        });
     }
 
     // Вкл/выкл режим редактирования
@@ -114,12 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.profile__title'),
             document.querySelector('.languages__title'),
             ...document.querySelectorAll('.language__label'),
-            document.querySelector('.experience__title'),
             ...document.querySelectorAll('.experience__date'),
             ...document.querySelectorAll('.experience__job'),
             ...document.querySelectorAll('.experience__details'),
             // Если li должны быть редактируемыми:
-            ...document.querySelectorAll('.experience__description ul li'),
+            ...document.querySelectorAll('.experience__description ul li'), // *** Убедитесь, что это действительно нужно
             document.querySelector('.tools__title'),
             ...document.querySelectorAll('.tools__section-title'),
             document.querySelector('.education__title'),
@@ -131,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ...document.querySelectorAll('.interests__item'),
             document.querySelector('.contact__title'),
             document.querySelector('.contact__email')
-        ].filter(Boolean);
+        ].filter(Boolean); // .filter(Boolean) удаляет null элементы, если querySelector ничего не нашел
 
         editableElements.forEach(element => {
             element.setAttribute('contenteditable', isEditing);
@@ -159,90 +146,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Функция для сохранения текущих данных в localStorage
     function saveData() {
-        const data = {
-            profileIntro: document.querySelector('.profile__intro')?.textContent.trim() || '',
-            profileName: document.querySelector('.profile__name')?.textContent.trim() || '',
-            profileTitle: document.querySelector('.profile__title')?.textContent.trim() || '',
-            languagesTitle: document.querySelector('.languages__title')?.textContent.trim() || '',
-            languageLabels: Array.from(document.querySelectorAll('.language__label')).map(label => label.textContent.trim()),
-            languageLevels: Array.from(document.querySelectorAll('.language__bar')).map(bar => bar.getAttribute('data-level') || '0%'),
-            experienceTitle: document.querySelector('.experience__title')?.textContent.trim() || '',
-            experienceDates: Array.from(document.querySelectorAll('.experience__date')).map(date => date.textContent.trim()),
-            experienceJobs: Array.from(document.querySelectorAll('.experience__job')).map(job => job.textContent.trim()),
-            experienceDetails: Array.from(document.querySelectorAll('.experience__details')).map(detail => detail.textContent.trim()),
-            toolsTitle: document.querySelector('.tools__title')?.textContent.trim() || '',
-            toolsSectionTitles: Array.from(document.querySelectorAll('.tools__section-title')).map(title => title.textContent.trim()),
-            educationTitle: document.querySelector('.education__title')?.textContent.trim() || '',
-            educationYears: Array.from(document.querySelectorAll('.education__year')).map(year => year.textContent.trim()),
-            educationCourses: Array.from(document.querySelectorAll('.education__course')).map(course => course.textContent.trim()),
-            educationHashtags: Array.from(document.querySelectorAll('.education__hashtag')).map(hashtag => hashtag.textContent.trim()),
-            educationInstitutions: Array.from(document.querySelectorAll('.education__institution')).map(inst => inst.textContent.trim()),
-            interestsTitle: document.querySelector('.interests__title')?.textContent.trim() || '',
-            interestsItems: Array.from(document.querySelectorAll('.interests__item')).map(item => item.textContent.trim()),
-            contactTitle: document.querySelector('.contact__title')?.textContent.trim() || '',
-            contactEmail: document.querySelector('.contact__email')?.textContent.trim() || ''
-        };
+        const data = {};
+        editableFields.forEach(field => {
+            if (field.type === 'text') {
+                const element = document.querySelector(field.selector);
+                data[field.prop] = element ? element.textContent.trim() : '';
+            } else if (field.type === 'arrayText') {
+                data[field.prop] = Array.from(document.querySelectorAll(field.selector)).map(el => el.textContent.trim());
+            } else if (field.type === 'arrayAttr') {
+                data[field.prop] = Array.from(document.querySelectorAll(field.selector)).map(el => el.getAttribute(field.attr) || '0%');
+            }
+        });
         localStorage.setItem('resumeData', JSON.stringify(data));
     }
 
+    // Функция для сброса данных к начальному состоянию и удаления из localStorage
     function resetData() {
-        if (document.querySelector('.profile__intro')) document.querySelector('.profile__intro').textContent = initialData.profileIntro;
-        if (document.querySelector('.profile__name')) document.querySelector('.profile__name').textContent = initialData.profileName;
-        if (document.querySelector('.profile__title')) document.querySelector('.profile__title').textContent = initialData.profileTitle;
-        if (document.querySelector('.languages__title')) document.querySelector('.languages__title').textContent = initialData.languagesTitle;
-        document.querySelectorAll('.language__label').forEach((label, index) => {
-            label.textContent = initialData.languageLabels[index];
+        editableFields.forEach(field => {
+            if (field.type === 'text') {
+                const element = document.querySelector(field.selector);
+                if (element) {
+                    element.textContent = initialData[field.prop];
+                }
+            } else if (field.type === 'arrayText') {
+                document.querySelectorAll(field.selector).forEach((el, index) => {
+                    el.textContent = initialData[field.prop][index];
+                });
+            } else if (field.type === 'arrayAttr') {
+                document.querySelectorAll(field.selector).forEach((el, index) => {
+                    const newValue = initialData[field.prop][index];
+                    el.setAttribute(field.attr, newValue);
+                    if (field.selector === '.language__bar') {
+                        const fill = el.querySelector('div');
+                        if (fill) fill.style.width = newValue;
+                    }
+                });
+            }
         });
-        document.querySelectorAll('.language__bar').forEach((bar, index) => {
-            bar.setAttribute('data-level', initialData.languageLevels[index]);
-            const fill = bar.querySelector('div');
-            if (fill) fill.style.width = initialData.languageLevels[index];
-        });
-        if (document.querySelector('.experience__title')) document.querySelector('.experience__title').textContent = initialData.experienceTitle;
-        document.querySelectorAll('.experience__date').forEach((date, index) => {
-            date.textContent = initialData.experienceDates[index];
-        });
-        document.querySelectorAll('.experience__job').forEach((job, index) => {
-            job.textContent = initialData.experienceJobs[index];
-        });
-        document.querySelectorAll('.experience__details').forEach((detail, index) => {
-            detail.textContent = initialData.experienceDetails[index];
-        });
-        document.querySelectorAll('.experience__description ul li').forEach((li, index) => {
-            li.textContent = initialData.experienceDescriptionLis[index]; // Добавьте это в initialData
-        });
-        if (document.querySelector('.tools__title')) document.querySelector('.tools__title').textContent = initialData.toolsTitle;
-        document.querySelectorAll('.tools__section-title').forEach((title, index) => {
-            title.textContent = initialData.toolsSectionTitles[index];
-        });
-        if (document.querySelector('.education__title')) document.querySelector('.education__title').textContent = initialData.educationTitle;
-        document.querySelectorAll('.education__year').forEach((year, index) => {
-            year.textContent = initialData.educationYears[index];
-        });
-        document.querySelectorAll('.education__course').forEach((course, index) => {
-            course.textContent = initialData.educationCourses[index];
-        });
-        document.querySelectorAll('.education__hashtag').forEach((hashtag, index) => {
-            hashtag.textContent = initialData.educationHashtags[index];
-        });
-        document.querySelectorAll('.education__institution').forEach((inst, index) => {
-            inst.textContent = initialData.educationInstitutions[index];
-        });
-        if (document.querySelector('.interests__title')) document.querySelector('.interests__title').textContent = initialData.interestsTitle;
-        document.querySelectorAll('.interests__item').forEach((item, index) => {
-            item.textContent = initialData.interestsItems[index];
-        });
-        if (document.querySelector('.contact__title')) document.querySelector('.contact__title').textContent = initialData.contactTitle;
-        if (document.querySelector('.contact__email')) document.querySelector('.contact__email').textContent = initialData.contactEmail;
 
-        saveData(); // Сохраняем исходное состояние
+        // *** ГЛАВНОЕ ИСПРАВЛЕНИЕ: Удаляем данные из localStorage ***
+        localStorage.removeItem('resumeData');
+
         toggleEditMode(false); // Выключаем режим редактирования после сброса
     }
 
-
+    // Инициализация: Загружаем сохраненные данные при старте
     loadSavedData();
 
+    // Обработчики событий для кнопок
     const editBtn = document.querySelector('.resume__edit-btn');
     const resetBtn = document.querySelector('.resume__reset-btn');
 
@@ -250,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         editBtn.addEventListener('click', () => {
             const isEditing = editBtn.textContent === 'Edit';
             toggleEditMode(isEditing);
-            if (!isEditing) saveData(); // Сохраняем при выходе из режима редактирования
+            if (!isEditing) saveData(); // Сохраняем при выходе из режима редактирования (т.е. при нажатии Save)
         });
     }
 
@@ -258,23 +211,25 @@ document.addEventListener('DOMContentLoaded', () => {
         resetBtn.addEventListener('click', resetData);
     }
 
+    // Сохранение данных при потере фокуса с редактируемого элемента
     document.addEventListener('blur', (event) => {
-        // Проверяем, является ли целевой элемент редактируемым и имеет ли contenteditable="true"
         if (event.target.closest('.editable') && event.target.getAttribute('contenteditable') === 'true') {
             saveData();
         }
-    }, true);
+    }, true); // `true` для capture phase, чтобы ловить blur на дочерних элементах
 
+    // Предотвращение новой строки при нажатии Enter в редактируемых элементах
     document.addEventListener('keypress', (event) => {
         if (event.key === 'Enter' && event.target.closest('.editable') && event.target.getAttribute('contenteditable') === 'true') {
             event.preventDefault();
-            event.target.blur();
+            event.target.blur(); // Снимаем фокус, чтобы вызвать blur и сохранить данные
         }
     });
 
+    // Обработчик для изменения уровня языка кликом по полосе
     document.addEventListener('click', (event) => {
         const bar = event.target.closest('.language__bar');
-        if (bar && bar.classList.contains('editable')) {
+        if (bar && bar.classList.contains('editable')) { // Проверяем, что bar в режиме редактирования
             const rect = bar.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
             const widthPercent = Math.min(100, Math.max(0, (clickX / rect.width) * 100));
@@ -282,8 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fill = bar.querySelector('div');
             if (fill) fill.style.width = newLevel;
             bar.setAttribute('data-level', newLevel);
-            saveData();
+            saveData(); // Сохраняем изменение уровня языка
         }
     });
 });
-
