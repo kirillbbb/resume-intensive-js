@@ -1,12 +1,12 @@
-@import 'fonts.css';
-@import "_profile.css";
-@import "_languages.css";
-@import "_experience.css";
-@import "_tools.css";
-@import "_education.css";
-@import "interests.css";
-@import "contact.css";
-@import "_media-adaptive.css";
+@import 'css/fonts.css';
+@import "css/_profile.css";
+@import "css/_languages.css";
+@import "css/_experience.css";
+@import "css/_tools.css";
+@import "css/_education.css";
+@import "css/_interests.css";
+@import "css/_contact.css";
+@import "css/_media-adaptive.css";
 
 :root {
     --block-background-color: #f0f0f0;
